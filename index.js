@@ -1,5 +1,24 @@
 // GIVEN a command-line application that accepts user input
+// -> will need to implement inquirer -> done
 // WHEN I am prompted for my team members and their information
+
+const inquirer = require("inquirer");
+
+inquirer
+  .prompt([
+    /* Pass your questions in here */
+  ])
+  .then((answers) => {
+    // Use user feedback for... whatever!!
+  })
+  .catch((error) => {
+    if (error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+    } else {
+      // Something else went wrong
+    }
+  });
+
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
 // WHEN I click on an email address in the HTML
 // THEN my default email program opens and populates the TO field of the email with the address
