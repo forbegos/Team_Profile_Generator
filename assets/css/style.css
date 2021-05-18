@@ -1,5 +1,17 @@
 header {
   padding: 20px;
-  background-color: blue;
+  background-color: lightseagreen;
   color: white;
+}
+
+.row {
+  justify-content: center;
+}
+
+.col {
+  margin-top: 5px;
+}
+
+.card-header {
+  background-color: lightseagreen;
 }
