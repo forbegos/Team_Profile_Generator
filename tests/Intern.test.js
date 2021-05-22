@@ -1,10 +1,10 @@
 const intern = require("../lib/intern.js");
 
 describe("intern", () => {
-  it("should return the value of the constructor value", () => {
+  it("should return a new object of intern", () => {
     const value = "school";
     const obj = new intern(value);
-    expect(obj.getSchool()).toEqual("school");
+    expect(typeof obj === "object");
   });
 
   it("should return the value of 'Intern' when calling getRole method", () => {

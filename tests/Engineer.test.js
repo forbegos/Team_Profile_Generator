@@ -1,10 +1,10 @@
 const engineer = require("../lib/engineer.js");
 
 describe("engineer", () => {
-  it("should return the value of the constructor value", () => {
+  it("should return a new object", () => {
     const value = "test";
     const obj = new engineer(value);
-    expect(obj.getGitHub()).toEqual("test");
+    expect(typeof obj === "object");
   });
 
   it("should return the value of 'Engineer' when calling getRole method", () => {
