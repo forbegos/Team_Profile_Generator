@@ -226,7 +226,11 @@ function generateHTML() {
   </body>
 </html>`;
 
-  fs.writeFile("index.html", html, (err) =>
+  fs.mkdir("./dist/", { recursive: true }, (err) =>
+    err ? console.log(err) : console.log("directory created succesfully")
+  );
+
+  fs.writeFile("./dist/index.html", html, (err) =>
     err ? console.log(err) : console.log("HTML file created succesfully")
   );
 }
