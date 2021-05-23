@@ -14,6 +14,8 @@ let isManager = true;
 let isEngineer = false;
 let isIntern = false;
 
+let employees = [];
+
 function askQuestions() {
   inquirer
     .prompt([
@@ -61,6 +63,7 @@ function askQuestions() {
         type: "input",
         message: "Please enter the employee's office number:",
         name: "officeNumber",
+        when: isManager,
       },
       {
         type: "confirm",
@@ -80,7 +83,7 @@ function buildEngineer(response) {
     response.email,
     response.github
   );
-  console.log(engineer);
+  employees.push(engineer);
 }
 function buildIntern(response) {
   const intern = new Intern(
@@ -89,7 +92,7 @@ function buildIntern(response) {
     response.email,
     response.school
   );
-  console.log(intern);
+  employees.push(intern);
 }
 
 function buildManager(response) {
@@ -99,7 +102,7 @@ function buildManager(response) {
     response.email,
     response.officeNumber
   );
-  console.log(manager);
+  employees.push(manager);
 }
 
 function manageResponses(response) {
@@ -141,9 +144,13 @@ function manageResponses(response) {
             askQuestions();
             break;
           default:
+            console.log(employees);
             console.log("program end");
         }
       });
+  } else {
+    console.log(employees);
+    console.log("program end");
   }
 }
 
