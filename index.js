@@ -157,6 +157,45 @@ function manageResponses(response) {
 }
 
 function generateHTML() {
+  let card = "";
+  for (let i = 0; i < employees.length; i++) {
+    console.log(employees[i].getRole());
+    if (employees[i].getRole() === "Manager") {
+      card += `
+      <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-1">
+            <h4 class="my-0 fw-normal">${employees[i].name}</h4>
+            <h4 class="my-0 fw-normal">${employees[i].getRole()}</h4>
+          </div>
+          <div class="card-body">
+            <p class="card-title pricing-card-title">${employees[i].email}</p>
+          </div>
+        </div>`;
+    } else if (employees[i].getRole() === "Intern") {
+      card += `
+      <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-1">
+            <h4 class="my-0 fw-normal">${employees[i].name}</h4>
+            <h4 class="my-0 fw-normal">${employees[i].getRole()}</h4>
+          </div>
+          <div class="card-body">
+            <p class="card-title pricing-card-title">${employees[i].email}</p>
+          </div>
+        </div>`;
+    } else if (employees[i].getRole() === "Engineer") {
+      card += `
+      <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-1">
+            <h4 class="my-0 fw-normal">${employees[i].name}</h4>
+            <h4 class="my-0 fw-normal">${employees[i].getRole()}</h4>
+          </div>
+          <div class="card-body">
+            <p class="card-title pricing-card-title">${employees[i].email}</p>
+          </div>
+        </div>`;
+    }
+  }
+
   let html = `
   <!DOCTYPE html>
 <html lang="en">
@@ -181,14 +220,7 @@ function generateHTML() {
   <body>
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
       <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-          <div class="card-header py-1">
-            <h4 class="my-0 fw-normal">Employee</h4>
-          </div>
-          <div class="card-body">
-            <p class="card-title pricing-card-title">Content here</p>
-          </div>
-        </div>
+        ${card}
       </div>
     </div>
   </body>
