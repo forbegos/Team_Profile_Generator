@@ -10,51 +10,82 @@ const Manager = require("./lib/manager");
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-// Start the app with initial input
-inquirer
-  .prompt([
-    {
-      type: "input",
-      message: "Please enter the team's manager name:",
-      name: "name",
-    },
-    {
-      type: "input",
-      message: "Please enter the employee's ID:",
-      name: "id",
-    },
-    {
-      type: "input",
-      message: "Please enter the employee's email address:",
-      name: "email",
-    },
-    {
-      type: "input",
-      message: "Please enter the employee's office number:",
-      name: "officeNumber",
-    },
-    {
-      type: "checkbox",
-      message: "What type of employee would like to add next:",
-      choices: ["Engineer", "Intern", "None"],
-      name: "employeeType",
-    },
-  ])
-  .then((response) => {
-    buildEmployee(response),
-      (err) =>
-        err ? console.log(err) : console.log("launching buildEmployee()");
-  });
+const engineer = false;
+const intern = false;
+const addEmployee = false;
 
-function buildEmployee(response) {
-  const manager = new Manager(
-    response.name,
-    response.id,
-    response.email,
-    response.officeNumber
-  );
-  console.log(manager);
+// Start the app with initial input
+function askBasicQuestions() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Please enter the team's manager name:",
+        name: "name",
+      },
+      {
+        type: "input",
+        message: "Please enter the employee's ID:",
+        name: "id",
+      },
+      {
+        type: "input",
+        message: "Please enter the employee's email address:",
+        name: "email",
+      },
+      {
+        type: "input",
+        message: "Please enter the employee's office number:",
+        name: "officeNumber",
+      },
+      {
+        type: "confirm",
+        message: "Do you need to add another employee:",
+        name: "newEmployee",
+      },
+    ])
+    .then((responses) => {
+      buildEmployee(responses);
+    });
 }
+
+function buildEmployee(responses) {
+  const manager = new Manager(
+    responses.name,
+    responses.id,
+    responses.email,
+    responses.officeNumber
+  );
+
+  if (responses.newEmployee) {
+    inquirer
+      .prompt([
+        {
+          type: "checkbox",
+          message: "What type of employee would like to add next:",
+          choices: ["Engineer", "Intern", "None"],
+          name: "empType",
+        },
+      ])
+      .then((response) => {
+        console.log(response.empType[0]);
+        switch (response.empType[0]) {
+          case "Engineer":
+            // buildEngineer(responses)
+            console.log("buildEngineer");
+            break;
+          case "Intern":
+            // buildIntern(responses);
+            console.log("buildIntern");
+            break;
+          default:
+            console.log(manager);
+        }
+      });
+  }
+}
+
+askBasicQuestions();
 
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
 // WHEN I click on an email address in the HTML
