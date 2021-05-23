@@ -147,6 +147,7 @@ function manageResponses(response) {
           default:
             console.log(employees);
             console.log("program end");
+            generateHTML();
         }
       });
   } else {
@@ -165,10 +166,20 @@ function generateHTML() {
       <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-1">
             <h4 class="my-0 fw-normal">${employees[i].name}</h4>
-            <h4 class="my-0 fw-normal">${employees[i].getRole()}</h4>
+            <h4 class="my-0 fw-normal"><span class="fas fa-mug-hot"></span> ${employees[
+              i
+            ].getRole()}</h4>
           </div>
           <div class="card-body">
-            <p class="card-title pricing-card-title">${employees[i].email}</p>
+            <p class="card-content id">ID: ${employees[i].id}</p>
+            <p>Email:<a class="card-content email" href = "mailto: ${
+              employees[i].email
+            }">
+         ${employees[i].email}
+            </a></p>
+            <p class="card-content office-number">Office number: ${
+              employees[i].officeNumber
+            }</p>
           </div>
         </div>`;
     } else if (employees[i].getRole() === "Intern") {
@@ -176,10 +187,18 @@ function generateHTML() {
       <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-1">
             <h4 class="my-0 fw-normal">${employees[i].name}</h4>
-            <h4 class="my-0 fw-normal">${employees[i].getRole()}</h4>
+            <h4 class="my-0 fw-normal"><span class="fa fa-graduation-cap"></span>${employees[
+              i
+            ].getRole()}</h4>
           </div>
           <div class="card-body">
-            <p class="card-title pricing-card-title">${employees[i].email}</p>
+            <p class="card-content id">ID: ${employees[i].id}</p>
+            <p>Email:<a class="card-content email" href = "mailto: ${
+              employees[i].email
+            }">
+         ${employees[i].email}
+            </a></p>            
+            <p class="card-content school">School ${employees[i].school}</p>
           </div>
         </div>`;
     } else if (employees[i].getRole() === "Engineer") {
@@ -187,10 +206,22 @@ function generateHTML() {
       <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-1">
             <h4 class="my-0 fw-normal">${employees[i].name}</h4>
-            <h4 class="my-0 fw-normal">${employees[i].getRole()}</h4>
+            <h4 class="my-0 fw-normal"><span class="fas fa-glasses"></span>${employees[
+              i
+            ].getRole()}</h4>
           </div>
           <div class="card-body">
-            <p class="card-title pricing-card-title">${employees[i].email}</p>
+            <p class="card-content id">ID: ${employees[i].id}</p>
+            <p>Email:<a class="card-content email" href = "mailto: ${
+              employees[i].email
+            }">
+         ${employees[i].email}
+            </a></p>
+            <p>Email:<a class="card-content github" href = "https://github.com/${
+              employees[i].github
+            }">
+         ${employees[i].github}
+            </a></p>
           </div>
         </div>`;
     }
@@ -209,7 +240,10 @@ function generateHTML() {
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"/>    
+    <link rel="stylesheet" href="./style.css" />
     <title>Team Profile Generator</title>
   </head>
 
@@ -219,15 +253,58 @@ function generateHTML() {
 
   <body>
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-      <div class="col">
         ${card}
-      </div>
     </div>
   </body>
 </html>`;
 
+  let css = `
+  header {
+    padding: 20px;
+    background-color: lightseagreen;
+    color: white;
+  }
+  
+  .row {
+    justify-content: center;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    width: 800px;
+    margin: 0 auto;
+  }
+  
+  .card-header {
+    background-color: lightseagreen;
+    color: white;
+    text-align: left;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  
+    text-align: left;
+  }
+  
+  .card {
+    width: 300px;
+    margin: 25px;
+    padding: 0;
+  }
+  
+  `;
+
   fs.mkdir("./dist/", { recursive: true }, (err) =>
     err ? console.log(err) : console.log("directory created succesfully")
+  );
+
+  fs.writeFile("./dist/style.css", css, (err) =>
+    err ? console.log(err) : console.log("HTML file created succesfully")
   );
 
   fs.writeFile("./dist/index.html", html, (err) =>
@@ -236,20 +313,3 @@ function generateHTML() {
 }
 
 askQuestions();
-// generateHTML();
-
-// THEN an HTML file is generated that displays a nicely formatted team roster based on user input
-// WHEN I click on an email address in the HTML
-// THEN my default email program opens and populates the TO field of the email with the address
-// WHEN I click on the GitHub username
-// THEN that GitHub profile opens in a new tab
-// WHEN I start the application
-// THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
-// WHEN I enter the team manager’s name, employee ID, email address, and office number
-// THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
-// WHEN I select the engineer option
-// THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
-// WHEN I select the intern option
-// THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
-// WHEN I decide to finish building my team
-// THEN I exit the application, and the HTML is generated
