@@ -3,20 +3,42 @@
 // WHEN I am prompted for my team members and their information
 
 const inquirer = require("inquirer");
+const fs = require("fs");
 
+// Start the app with initial input
 inquirer
   .prompt([
-    /* Pass your questions in here */
+    {
+      type: "input",
+      message: "Please enter the team's manager name:",
+      name: "name",
+    },
+    {
+      type: "input",
+      message: "Please enter the employee's ID:",
+      name: "id",
+    },
+    {
+      type: "input",
+      message: "Please enter the employee's email address:",
+      name: "email",
+    },
+    {
+      type: "input",
+      message: "Please enter the employee's office number:",
+      name: "officeNumber",
+    },
+    {
+      type: "checkbox",
+      message: "What type of employee would like to add next:",
+      choices: ["Engineer", "Intern", "None"],
+      name: "employeeType",
+    },
   ])
-  .then((answers) => {
-    // Use user feedback for... whatever!!
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
-    } else {
-      // Something else went wrong
-    }
+  .then((response) => {
+    buildEmployee(response),
+      (err) =>
+        err ? console.log(err) : console.log("launching buildEmployee()");
   });
 
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
