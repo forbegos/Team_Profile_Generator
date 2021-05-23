@@ -5,11 +5,7 @@ and displaying the results by generating an html page with cards for each employ
 
 ## This is the link to a video file illustrating how the application runs:
 
-http://www.google.com
-
-## Application Images
-
-INSERT SNAPSHOTS HERE
+https://drive.google.com/file/d/1SXCOdo-dAx3SY8sF70reLyjED3Jrmlf3/view?usp=sharing
 
 ## Author
 
