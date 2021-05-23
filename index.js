@@ -2,7 +2,7 @@
 // -> will need to implement inquirer -> done
 // WHEN I am prompted for my team members and their information
 // Define requires
-const Employee = require("./lib/employee");
+// const Employee = require("./lib/employee");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
@@ -10,18 +10,42 @@ const Manager = require("./lib/manager");
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-const engineer = false;
-const intern = false;
-const addEmployee = false;
+let isManager = true;
+let isEngineer = false;
+let isIntern = false;
 
-// Start the app with initial input
-function askBasicQuestions() {
+function askQuestions() {
   inquirer
     .prompt([
       {
         type: "input",
         message: "Please enter the team's manager name:",
         name: "name",
+        when: isManager,
+      },
+      {
+        type: "input",
+        message: "Please enter the engineer's name:",
+        name: "name",
+        when: isEngineer,
+      },
+      {
+        type: "input",
+        message: "Please enter the engineer's Github user name:",
+        name: "github",
+        when: isEngineer,
+      },
+      {
+        type: "input",
+        message: "Please enter the team's intern's name:",
+        name: "name",
+        when: isIntern,
+      },
+      {
+        type: "input",
+        message: "Please enter the intern's School  name:",
+        name: "school",
+        when: isIntern,
       },
       {
         type: "input",
@@ -44,20 +68,51 @@ function askBasicQuestions() {
         name: "newEmployee",
       },
     ])
-    .then((responses) => {
-      buildEmployee(responses);
+    .then((response) => {
+      manageResponses(response);
     });
 }
 
-function buildEmployee(responses) {
-  const manager = new Manager(
-    responses.name,
-    responses.id,
-    responses.email,
-    responses.officeNumber
+function buildEngineer(response) {
+  const engineer = new Engineer(
+    response.name,
+    response.id,
+    response.email,
+    response.github
   );
+  console.log(engineer);
+}
+function buildIntern(response) {
+  const intern = new Intern(
+    response.name,
+    response.id,
+    response.email,
+    response.school
+  );
+  console.log(intern);
+}
 
-  if (responses.newEmployee) {
+function buildManager(response) {
+  const manager = new Manager(
+    response.name,
+    response.id,
+    response.email,
+    response.officeNumber
+  );
+  console.log(manager);
+}
+
+function manageResponses(response) {
+  // Check type of employee
+  if (isManager) {
+    buildManager(response);
+  } else if (isEngineer) {
+    buildEngineer(response);
+  } else {
+    buildIntern(response);
+  }
+  // Check if add another employee
+  if (response.newEmployee) {
     inquirer
       .prompt([
         {
@@ -67,25 +122,32 @@ function buildEmployee(responses) {
           name: "empType",
         },
       ])
-      .then((response) => {
-        console.log(response.empType[0]);
-        switch (response.empType[0]) {
+      .then((answer) => {
+        console.log(answer.empType[0]);
+
+        switch (answer.empType[0]) {
           case "Engineer":
-            // buildEngineer(responses)
+            isEngineer = true;
+            isManager = false;
+            isIntern = false;
             console.log("buildEngineer");
+            askQuestions();
             break;
           case "Intern":
-            // buildIntern(responses);
+            isEngineer = false;
+            isManager = false;
+            isIntern = true;
             console.log("buildIntern");
+            askQuestions();
             break;
           default:
-            console.log(manager);
+            console.log("program end");
         }
       });
   }
 }
 
-askBasicQuestions();
+askQuestions();
 
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
 // WHEN I click on an email address in the HTML
