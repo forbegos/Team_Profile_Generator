@@ -1,6 +1,11 @@
 // GIVEN a command-line application that accepts user input
 // -> will need to implement inquirer -> done
 // WHEN I am prompted for my team members and their information
+// Define requires
+const Employee = require("./lib/employee");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
+const Manager = require("./lib/manager");
 
 const inquirer = require("inquirer");
 const fs = require("fs");
@@ -40,6 +45,16 @@ inquirer
       (err) =>
         err ? console.log(err) : console.log("launching buildEmployee()");
   });
+
+function buildEmployee(response) {
+  const manager = new Manager(
+    response.name,
+    response.id,
+    response.email,
+    response.officeNumber
+  );
+  console.log(manager);
+}
 
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
 // WHEN I click on an email address in the HTML
